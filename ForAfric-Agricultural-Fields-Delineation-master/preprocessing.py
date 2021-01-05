@@ -45,14 +45,14 @@ import utils.coco
 
 """## Vector preparation """
 
-inpath_s2 = Path(r'/home/shreekanthajith/intello_satellite/ForAfric-Agricultural-Fields-Delineation-master/data/RGB_small.tif')
-inpath_fields = Path(r'/home/shreekanthajith/intello_satellite/ForAfric-Agricultural-Fields-Delineation-master/data/marker2016_small.shp')
+inpath_s2 = Path(r'path to .tif file ')
+inpath_fields = Path(r'path to .shp file')
 
 outpath = Path(r'output/preprocessed')
 
 def prepare_vector(fp, out_crs, clipping_bounds):
     df = (gpd.read_file(str(fp), encoding='cp865')  # danish encoding
-             .rename(columns={'Afgroede': 'lc_name', 'AfgKode': 'lc_id', 'JOURNALNUM': 'journalnr'})
+             .rename(columns={'Afgroede': 'lc_name', 'AfgKode': 'lc_id', 'JOURNALNUM': 'journalnr'}) #check for the keys before preprocessing , else key errors will come
              .drop(['GB', 'GEOMETRISK', 'MARKNUMMER'], axis=1)
              .pipe(utils.geo.explode_mp)
              .pipe(utils.geo.buffer_zero)
