@@ -36,12 +36,12 @@ from mrcnn.config import Config
 from mrcnn import model as modellib, utils
 
 
-PRETRAINED_MODEL_PATH = os.path.join(ROOT_DIR, "model1024.h5")
+PRETRAINED_MODEL_PATH = os.path.join(ROOT_DIR, "model1024.h5") #input path for model
 LOGS_DIRECTORY = os.path.join(ROOT_DIR, "logs")
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
 
 #put images in test folder before testing the model
-IMAGE_DIR = os.path.join(ROOT_DIR, "data", "train-og", "images")
+IMAGE_DIR = os.path.join(ROOT_DIR, "data", "train-og", "images") #provide input path for test folder
 #------------------------------------------------------------------------------------------------------------------------------#
 #i intentiate my  configuration
 class InferenceConfig(coco.CocoConfig):
@@ -53,7 +53,6 @@ class InferenceConfig(coco.CocoConfig):
     IMAGE_MAX_DIM=256
     IMAGE_MIN_DIM=256
     NAME = "ForAfricPro"
-    RPN_NMS_THRESHOLD = 0.5
 
 
 config = InferenceConfig()
@@ -74,7 +73,7 @@ class_names = ['BG', 'field'] # In our case, we have 1 class
 file_names = next(os.walk(IMAGE_DIR))[2]
 print(file_names)
 random_image = skimage.io.imread(os.path.join(IMAGE_DIR, random.choice(file_names)))
-random_image = skimage.io.imread('/home/shreekanthajith/intello_satellite/ForAfric-Agricultural-Fields-Delineation-master/output_256/preprocessed/data256/train/images/COCO_train2016_000000100005.jpg')
+#random_image = skimage.io.imread('/home/shreekanthajith/intello_satellite/ForAfric-Agricultural-Fields-Delineation-master/output_256/preprocessed/data256/train/images/COCO_train2016_000000100005.jpg')
 predictions = model.detect([random_image]*config.BATCH_SIZE, verbose=1) # We are replicating the same image to fill up the batch_size
 p = predictions[0]
 visualize.display_instances(random_image,p['rois'], p['masks'], p['class_ids'], 
